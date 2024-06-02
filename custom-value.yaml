@@ -1,0 +1,15 @@
+replicaCount: 1
+
+mongodb:
+  enabled: false
+  external:
+    host: mongodb.rocketchat.svc.cluster.local
+    port: 27017
+    username: admin
+    password: password
+    database: admin
+    authSource: admin
+
+env:
+  MONGO_URL: "mongodb://admin:password@mongodb.rocketchat.svc.cluster.local:27017/admin?authSource=admin"
+  MONGO_OPLOG_URL: "mongodb://admin:password@mongodb.rocketchat.svc.cluster.local:27017/local?authSource=admin"

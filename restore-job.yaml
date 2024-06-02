@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongodb-restore
+spec:
+  template:
+    spec:
+      containers:
+      - name: mongodb-restore
+        image: bitnami/mongodb:latest
+        command: ["/bin/bash", "-c"]
+        args: ["/scripts/restore-mongodb.sh", "TIMESTAMP"]  # Replace TIMESTAMP with your actual backup timestamp
+        volumeMounts:
+        - name: restore-script
+          mountPath: /scripts
+        - name: backup-storage
+          mountPath: /backup
+      restartPolicy: OnFailure
+      volumes:
+      - name: restore-script
+        configMap:
+          name: mongodb-restore-script
+      - name: backup-storage
+        persistentVolumeClaim:
+          claimName: mongodb-backup-pvc
